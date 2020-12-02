@@ -29,14 +29,39 @@ public class ActionListAgenceBancaire implements ActionList<AgenceBancaire> {
         return actionList.size();
     }
 
+    @Override
+    public boolean addAction(Action<AgenceBancaire> ac, int index) {
+        if ((index < 0) || (index > size())) return false;
+        actionList.set(index, ac);
+        return true;
+    }
+
+    @Override
+    public boolean removeAction(int index) {
+        if ((index < 0) || (index > size())) return false;
+        actionList.remove(index);
+        return false;
+    }
+
+    @Override
+    public boolean removeAction(Action<AgenceBancaire> ac) {
+        if (!actionList.contains(ac)) return false;
+        actionList.remove(ac);
+        return false;
+    }
+
+    @Override
+    public String[] listOfActions() {
+        String[] listMsgActions = new String[actionList.size()];
+        for (int i = 0; i < actionList.size(); i++)
+            listMsgActions[i] = actionList.get(i).actionMessage();
+        return listMsgActions;
+    }
+
     public boolean addAction(Action action){
         if (actionList.contains(action)) return false;
         actionList.add(action);
         return true;
-    }
-
-    public void remove(Action action){
-        actionList.remove(action);
     }
 
     @Override
