@@ -1,8 +1,9 @@
 package application.action;
 
+import application.ApplicationContexteAgenceBancaire;
 import banque.AgenceBancaire;
 
-public class ActionListDesComptes implements Action<AgenceBancaire> {
+public class ActionListDesComptes implements Action<ApplicationContexteAgenceBancaire> {
 
     private String message;
     private String code;
@@ -23,8 +24,9 @@ public class ActionListDesComptes implements Action<AgenceBancaire> {
     }
 
     @Override
-    public void execute(AgenceBancaire ag) throws Exception {
-        System.out.println(message);
-        ag.afficher();
+    public void execute(ApplicationContexteAgenceBancaire applicationAB) throws Exception {
+        applicationAB.print(message);
+        applicationAB.agenceBancaire.afficher();
+        applicationAB.tempo();
     }
 }

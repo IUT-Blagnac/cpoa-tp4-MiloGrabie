@@ -1,4 +1,5 @@
 import application.AccesAgenceBancaire;
+import application.ApplicationContexteAgenceBancaire;
 import application.action.ActionListDesComptes;
 import application.action.ActionVoirCompteNumero;
 import application.actionList.ActionListAgenceBancaire;
@@ -8,13 +9,10 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
 
-        AgenceBancaire agenceBancaire = AccesAgenceBancaire.getAgenceBancaire();
-
-        ActionListAgenceBancaire actionListAgence = new ActionListAgenceBancaire("Choisir", "-1", "Menu Agence Bancaire");
-        actionListAgence.addAction(new ActionListDesComptes("Affichages de la liste des compte", "-1"));
-        actionListAgence.addAction(new ActionVoirCompteNumero("Affichages du compte", "-1"));
-        actionListAgence.execute(agenceBancaire);
-
+        ActionListAgenceBancaire actionListAgence = new ActionListAgenceBancaire("Liste des actions :", "-1", "Menu Agence Bancaire");
+        actionListAgence.addAction(new ActionListDesComptes("Affichages de la liste des compte", "1"));
+        actionListAgence.addAction(new ActionVoirCompteNumero("Affichages du compte", "2"));
+        actionListAgence.execute(ApplicationContexteAgenceBancaire.getInstance());
 
     }
 

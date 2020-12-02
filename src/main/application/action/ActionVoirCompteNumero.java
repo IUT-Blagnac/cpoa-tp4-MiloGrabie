@@ -1,9 +1,10 @@
 package application.action;
 
+import application.ApplicationContexteAgenceBancaire;
 import banque.AgenceBancaire;
 import banque.Compte;
 
-public class ActionVoirCompteNumero implements Action<AgenceBancaire> {
+public class ActionVoirCompteNumero implements Action<ApplicationContexteAgenceBancaire> {
     private String message;
     private String code;
 
@@ -23,13 +24,16 @@ public class ActionVoirCompteNumero implements Action<AgenceBancaire> {
     }
 
     @Override
-    public void execute(AgenceBancaire ag) throws Exception {
-        System.out.println(message);
-        Compte compte = ag.getCompte(code);
+    public void execute(ApplicationContexteAgenceBancaire applicationAB) throws Exception {
+        applicationAB.print(message);
+        applicationAB.print("Entrez le numéro de compte :");
+        String compteNumeber = applicationAB.askUser();
+        Compte compte = applicationAB.agenceBancaire.getCompte(compteNumeber);
         if (compte==null)
-            System.out.println("Compte inexistant ...");
+            applicationAB.print("Compte inexistant ...");
         else
             compte.afficher();
+        applicationAB.tempo();
     }
 }
 

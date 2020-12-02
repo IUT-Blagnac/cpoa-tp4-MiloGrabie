@@ -1,12 +1,13 @@
 package application.actionList;
 
+import application.ApplicationContexteAgenceBancaire;
 import application.action.Action;
 import application.action.ActionList;
 import banque.AgenceBancaire;
 
 import java.util.ArrayList;
 
-public class ActionListAgenceBancaire implements ActionList<AgenceBancaire> {
+public class ActionListAgenceBancaire implements ActionList<ApplicationContexteAgenceBancaire> {
 
     private String message;
     private String code;
@@ -30,9 +31,9 @@ public class ActionListAgenceBancaire implements ActionList<AgenceBancaire> {
     }
 
     @Override
-    public boolean addAction(Action<AgenceBancaire> ac, int index) {
+    public boolean addAction(Action<ApplicationContexteAgenceBancaire> appContextAB, int index) {
         if ((index < 0) || (index > size())) return false;
-        actionList.set(index, ac);
+        actionList.set(index, appContextAB);
         return true;
     }
 
@@ -44,9 +45,9 @@ public class ActionListAgenceBancaire implements ActionList<AgenceBancaire> {
     }
 
     @Override
-    public boolean removeAction(Action<AgenceBancaire> ac) {
-        if (!actionList.contains(ac)) return false;
-        actionList.remove(ac);
+    public boolean removeAction(Action<ApplicationContexteAgenceBancaire> appContextAB) {
+        if (!actionList.contains(appContextAB)) return false;
+        actionList.remove(appContextAB);
         return false;
     }
 
@@ -75,12 +76,33 @@ public class ActionListAgenceBancaire implements ActionList<AgenceBancaire> {
     }
 
     @Override
-    public void execute(AgenceBancaire ag) throws Exception {
-        System.out.println(title);
-        System.out.println(message);
-        for (int i = 0; i < actionList.size(); i++)
-            System.out.println((i+1) + " - " + actionList.get(i).actionMessage());
+    public void execute(ApplicationContexteAgenceBancaire appContextAB) throws Exception {
+        while (true){
 
-        System.out.println("0 - Quitter le menu");
+            appContextAB.print("\n" + title);
+            appContextAB.print(message);
+
+            for(Action action : actionList)
+                appContextAB.print(action.actionCode() + " - " + action.actionMessage());
+            appContextAB.print("\n0 - Quitter le menu");
+
+            appContextAB.print("\nEntrez votre choix :");
+
+            String choix = appContextAB.askUser();
+
+            if (choix.equals("0")) return;
+            boolean goodChoice = false;
+            for(Action action : actionList)
+                if (action.actionCode().equals(choix))
+                {
+                    action.execute(appContextAB);
+                    goodChoice = true;
+                }
+
+            if (goodChoice == false)
+                appContextAB.print("Aucun choix valable.\n");
+        }
+
+
     }
 }
