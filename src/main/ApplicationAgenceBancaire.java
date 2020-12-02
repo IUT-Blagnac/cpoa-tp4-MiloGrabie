@@ -13,14 +13,18 @@ public class ApplicationAgenceBancaire {
 	 * @param ag	AgenceBancaire pour récupérer le nom et la localisation
 	 */
 	public static void afficherMenu(AgenceBancaire ag) {
-		System.out.println("Menu de " + ag.getNomAgence() + " (" + ag.getLocAgence() + ")");
-		System.out.println("l - Liste des comptes de l'agence");
-		System.out.println("v - Voir un compte (par son numéro)");
-		System.out.println("p - voir les comptes d'un Propriétaire (par son nom)");
-		System.out.println("d - Déposer de l'argent sur un compte");
-		System.out.println("r - Retirer de l'argent sur un compte");
-		System.out.println("q - Quitter");
-		System.out.print("Choix -> ");
+		System.out.println("--\n	Agence " + ag.getNomAgence() + " de " + ag.getLocAgence());
+		System.out.println("	Menu Général\n--");
+		System.out.println("	Choisir :");
+		System.out.println("		1 - Liste des comptes de l'agence");
+		System.out.println("		2 - Voir un compte (par son numéro)");
+		System.out.println("		3 - Menu opérations sur comptes");
+		System.out.println("		4 - Menu gestion des comptes");
+//		System.out.println("p - voir les comptes d'un Propriétaire (par son nom)");
+//		System.out.println("d - Déposer de l'argent sur un compte");
+//		System.out.println("r - Retirer de l'argent sur un compte");
+		System.out.println("\n		0 - Pour quitter ce menu");
+		System.out.print("Votre choix ? ");
 	}
 	
 	/**
@@ -36,7 +40,6 @@ public class ApplicationAgenceBancaire {
 	}
 
 	public static void main(String argv[]) {
-		
 		String choix;
 
 		boolean continuer ;
@@ -58,16 +61,16 @@ public class ApplicationAgenceBancaire {
 			choix = lect.next();
 			choix = choix.toLowerCase();
 			switch (choix) {
-				case "q" :
+				case "0" :
 					System.out.println("ByeBye");
 					ApplicationAgenceBancaire.tempo();
 					continuer = false;
 					break;
-				case "l" :
+				case "1" :
 					monAg.afficher();
 					ApplicationAgenceBancaire.tempo();
 					break;	
-				case "v" :
+				case "2" :
 					System.out.print("Num compte -> ");
 					numero = lect.next();
 					c = monAg.getCompte(numero);
@@ -78,6 +81,12 @@ public class ApplicationAgenceBancaire {
 					}
 					ApplicationAgenceBancaire.tempo();
 					break;
+
+				case "3":
+
+					ApplicationAgenceBancaire.tempo();
+					break;
+
 				case "p" :
 					System.out.print("Propriétaire -> ");
 					nom = lect.next();
